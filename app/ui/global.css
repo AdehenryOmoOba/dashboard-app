@@ -16,3 +16,27 @@ input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
+/* Hide Next.js badge injected in dev */
+[data-next-badge] {
+  display: none !important;
+}
+
+/* Fallbacks for other dev toolbar/badge selectors across Next.js versions */
+#__nextBuildIndicator,
+#nextjs-devtools,
+#nextjs-dev-toolbar,
+#nextjs-scroll-indicator,
+#nextjs__container,
+#nextjs-portal-root,
+[data-nextjs],
+[data-nextjs-toolbar],
+[data-nextjs-devtools],
+[data-nextjs-dev-overlay],
+[data-nextjs-scroll-indicator],
+[data-nextjs-toast],
+[data-nextjs-router-badge],
+[data-nextjs-devtools-badge],
+button[aria-label="Next.js Tools"] {
+  display: none !important;
+}
