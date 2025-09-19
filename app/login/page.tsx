@@ -3,6 +3,7 @@ import LoginForm from '@/app/ui/login-form';
 import { Suspense } from 'react';
 import { Metadata } from 'next';
 
+//comment
 export const metadata: Metadata = {
   title: 'Login',
 };
