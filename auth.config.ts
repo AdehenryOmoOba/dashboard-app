@@ -5,7 +5,10 @@ import postgres from 'postgres';
 import bcrypt from 'bcryptjs';
 import type { User } from '@/app/lib/definitions';
 
-const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
+const sql = postgres(process.env.POSTGRES_URL!, { 
+  ssl: 'require',
+  max: 1, // Limit connections in serverless environment
+});
 
 async function getUser(email: string): Promise<User | undefined> {
   try {
@@ -17,11 +20,21 @@ async function getUser(email: string): Promise<User | undefined> {
   }
 }
 
+// Validate required environment variables
+if (!process.env.AUTH_SECRET) {
+  throw new Error('AUTH_SECRET is required but not defined');
+}
+
+if (!process.env.POSTGRES_URL) {
+  throw new Error('POSTGRES_URL is required but not defined');
+}
+
 export const authConfig = {
   pages: {
     signIn: '/login',
   },
   secret: process.env.AUTH_SECRET,
+  trustHost: true, // Trust all hosts in development
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
